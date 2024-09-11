@@ -5,6 +5,7 @@ import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/home/Home";
 import Footer from "./components/footer/Footer";
 import Login from "./pages/login/Login";
+import Register from "./pages/register/Register";
 import Profile from "./pages/profile/Profile";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
             </Route>
 
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </div>
 
