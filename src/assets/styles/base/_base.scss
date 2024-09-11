@@ -5,6 +5,17 @@
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
+  color: $primary-text-color;
+}
+
+body {
+  background-color: $background-color;
+}
+
+button {
+  border: none;
+  outline: none;
+  background-color: $primary-color;
 }
 
 .layout {
@@ -45,5 +56,5 @@
   position: sticky;
   top: 0;
   width: 350px;
-  padding: 10px 30px;
+  padding: 15px 30px;
 }

@@ -1,0 +1,34 @@
+.navbar {
+  padding: 10px;
+
+  border-right: 2px solid $ternary-text-color;
+
+  &__title {
+    font-size: 26px;
+    font-weight: bold;
+  }
+
+  &__links {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 10px 0;
+  }
+
+  &__link {
+    padding: 10px 20px;
+
+    font-size: 20px;
+
+    border-radius: 10px;
+
+    &:hover {
+      background-color: $background-color-focus;
+    }
+  }
+
+  &__button {
+    width: 150px;
+    font-size: 18px;
+  }
+}
