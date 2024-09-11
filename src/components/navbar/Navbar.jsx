@@ -1,5 +1,8 @@
 import "./Navbar.scss";
 
+import homeSVG from "../../assets/icons/house-chimney.svg";
+import profileSVG from "../../assets/icons/user.svg";
+
 const Navbar = () => {
   return (
     <section className="navbar sidebar">
@@ -9,10 +12,12 @@ const Navbar = () => {
       </p>
       <div className="navbar__links">
         <a href="/" className="navbar__link">
-          Home
+          <img src={homeSVG} alt="home icon" className="navbar__icon" />
+          <p>Home</p>
         </a>
         <a href="/profile" className="navbar__link">
-          Profile
+          <img src={profileSVG} alt="profile icon" className="navbar__icon" />
+          <p>Profile</p>
         </a>
       </div>
 

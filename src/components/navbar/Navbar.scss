@@ -1,4 +1,5 @@
 .navbar {
+  width: 300px;
   padding: 10px;
 
   border-right: 2px solid $ternary-text-color;
@@ -12,23 +13,38 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
-    margin: 10px 0;
+    margin: 20px 0;
   }
 
   &__link {
+    display: flex;
+    gap: 15px;
     padding: 10px 20px;
 
-    font-size: 20px;
-
     border-radius: 10px;
+
+    p {
+      font-size: 24px;
+      font-weight: bold;
+    }
 
     &:hover {
       background-color: $background-color-focus;
     }
   }
 
+  &__icon {
+    width: 21px;
+  }
+
   &__button {
     width: 150px;
+    padding: 10px 10px;
     font-size: 18px;
+    font-weight: bold;
+
+    border-radius: 30px;
+
+    cursor: pointer;
   }
 }
