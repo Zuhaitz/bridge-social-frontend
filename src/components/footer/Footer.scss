@@ -1,0 +1,35 @@
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 35px;
+
+  border-top: 2px solid $ternary-text-color;
+
+  color: $ternary-text-color;
+
+  &__legal {
+    font-size: 18px;
+    cursor: default;
+  }
+
+  &__credits {
+    font-size: 18px;
+    cursor: default;
+  }
+
+  &__link {
+    font-weight: bold;
+    color: $primary-color;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__highlight {
+    font-style: italic;
+    font-weight: bold;
+    color: $primary-color;
+  }
+}
