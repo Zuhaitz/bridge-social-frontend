@@ -46,6 +46,11 @@ const Navbar = () => {
             />
             <p>Register</p>
           </a>
+
+          <a href="/login" className="navbar__link">
+            <img src={profileSVG} alt="login icon" className="navbar__icon" />
+            <p>Login</p>
+          </a>
         </div>
 
         <button className="navbar__button">Create post</button>
