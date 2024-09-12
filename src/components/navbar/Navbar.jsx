@@ -1,11 +1,11 @@
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import homeSVG from "../../assets/icons/house-chimney.svg";
 import homeFillSVG from "../../assets/icons/house-chimney-fill.svg";
 import profileSVG from "../../assets/icons/user.svg";
 import profileFillSVG from "../../assets/icons/user-fill.svg";
 import "./Navbar.scss";
-import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const { token } = useSelector((state) => state.auth);
