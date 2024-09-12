@@ -13,14 +13,17 @@ const initialState = {
   token: tokenStorage || null,
 };
 
-export const register = createAsyncThunk("auth/register", async (userData) => {
-  try {
-    return await authService.register(userData);
-  } catch (error) {
-    console.error(error);
-    return error.response.data;
+export const register = createAsyncThunk(
+  "auth/register",
+  async (userData, { rejectWithValue }) => {
+    try {
+      return await authService.register(userData);
+    } catch (error) {
+      console.error(error);
+      return rejectWithValue(error.response.data);
+    }
   }
-});
+);
 
 export const login = createAsyncThunk(
   "auth/login",
