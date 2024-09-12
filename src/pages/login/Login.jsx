@@ -34,7 +34,7 @@ const Login = () => {
     if (Object.keys(errorList).length > 0) return setErrors(errorList);
     setErrors({});
     dispatch(login(formData)).then((res) => {
-      if (res.error) setLoginError(res.error.message);
+      if (res.error) setLoginError(res.payload.message);
       else {
         clearState();
         navigate("/");
