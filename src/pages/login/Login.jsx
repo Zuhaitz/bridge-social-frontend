@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../redux/auth/authSlice";
 
 import "./Login.scss";
 
 const Login = () => {
   const initialValue = {
-    name: "",
+    user: "",
     password: "",
   };
 
@@ -13,12 +15,13 @@ const Login = () => {
   const [errors, setErrors] = useState({});
   const [loginError, setLoginError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const validateForm = () => {
     const errorList = {};
-    const { name, password } = formData;
+    const { user, password } = formData;
 
-    if (name.length === 0) errorList.name = "Fill username field.";
+    if (user.length === 0) errorList.user = "Fill username field.";
     if (password.length === 0) errorList.password = "Fill password field.";
 
     return errorList;
@@ -30,16 +33,13 @@ const Login = () => {
     const errorList = validateForm();
     if (Object.keys(errorList).length > 0) return setErrors(errorList);
     setErrors({});
-
-    try {
-      // await login(formData);
-
-      clearState();
-      navigate("/");
-    } catch (error) {
-      console.error(error);
-      setLoginError(error.response.data.message);
-    }
+    dispatch(login(formData)).then((res) => {
+      if (res.error) setLoginError(res.error.message);
+      else {
+        clearState();
+        navigate("/");
+      }
+    });
   };
 
   const handleChange = (event) => {
@@ -64,17 +64,17 @@ const Login = () => {
 
         <form onSubmit={handleSubmit} className="login__form" noValidate>
           <div className="login__field">
-            <label htmlFor="name" className="login__fieldLabel">
-              Username:
+            <label htmlFor="user" className="login__fieldLabel">
+              Username or Email:
             </label>
             <div
-              className={`login__input ${errors.name && "login__input--error"}`}
+              className={`login__input ${errors.user && "login__input--error"}`}
             >
               <input
                 type="text"
-                name="name"
-                id="name"
-                value={formData.name}
+                name="user"
+                id="user"
+                value={formData.user}
                 onChange={handleChange}
               />
             </div>
