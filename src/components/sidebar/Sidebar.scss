@@ -1,3 +1,42 @@
 .rightbar {
   width: 350px;
+
+  &__search {
+    display: flex;
+    gap: 10px;
+    padding: 10px 20px;
+
+    border-radius: 20px;
+    background-color: $background-color-focus;
+  }
+
+  &__icon {
+    width: 21px;
+  }
+
+  &__input {
+    font-size: 18px;
+
+    outline: none;
+    border: none;
+
+    color: $primary-text-color;
+    background-color: $background-color-focus;
+
+    &::placeholder {
+      font-weight: normal;
+      color: $secondary-text-color;
+    }
+  }
+
+  &__searchEmpty {
+    width: 30px;
+
+    font-size: 18px;
+    text-align: center;
+
+    background-color: black;
+
+    cursor: pointer;
+  }
 }

@@ -8,7 +8,8 @@ import profileFillSVG from "../../assets/icons/user-fill.svg";
 import "./Navbar.scss";
 
 const Navbar = () => {
-  const { token } = useSelector((state) => state.auth);
+  // const { token } = useSelector((state) => state.auth);
+  const token = localStorage.getItem("token");
   const location = useLocation();
 
   return (
