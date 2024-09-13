@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { register } from "../../redux/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { register, reset } from "../../redux/auth/authSlice";
 
 import "./Register.scss";
 
@@ -17,20 +17,33 @@ const Register = () => {
     username: "",
     email: "",
     password: "",
+    repeat: "",
   };
 
   const [formData, setFormData] = useState(initialValue);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isSuccess, isError, message } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (isSuccess) {
+      clearState();
+      navigate("/login");
+    } else if (isError) {
+      console.log(message);
+    }
+
+    dispatch(reset());
+  }, [isSuccess, isError, message]);
 
   const validateForm = () => {
     const errorList = {};
 
-    const { username, email, password } = formData;
+    const { username, email, password, repeat } = formData;
 
     if (username.length < 3 || !regexText.test(username))
-      errorList.name =
+      errorList.username =
         username.length < 3
           ? "Name must be longer than 2 characters."
           : "Name must not contain numbers or special characters.";
@@ -40,6 +53,9 @@ const Register = () => {
     if (!regexPassword.test(password))
       errorList.password =
         "Password must be 8 digits long, and contain 1 number or letter.";
+    else if (password !== repeat) {
+      errorList.repeat = "Passwords must be the same.";
+    }
 
     return errorList;
   };
@@ -52,16 +68,7 @@ const Register = () => {
     if (Object.keys(errorList).length > 0) return setErrors(errorList);
     setErrors({});
 
-    try {
-      dispatch(register(formData));
-
-      clearState();
-      navigate("/");
-    } catch (error) {
-      const { messages } = error.response.data;
-      console.error(error.response);
-      console.log(messages);
-    }
+    dispatch(register(formData));
   };
 
   const handleChange = (event) => {
@@ -136,6 +143,25 @@ const Register = () => {
               />
             </div>
             <p className="register__error">{errors.password}</p>
+          </div>
+
+          <div className="register__field">
+            <div
+              className={`register__input ${
+                errors.repeat && "register__input--error"
+              }`}
+            >
+              <input
+                type="password"
+                name="repeat"
+                id="repeat"
+                placeholder="Repeat password"
+                value={formData.repeat}
+                onChange={handleChange}
+                autoComplete="off"
+              />
+            </div>
+            <p className="register__error">{errors.repeat}</p>
           </div>
 
           <button type="submit" className="register__button">

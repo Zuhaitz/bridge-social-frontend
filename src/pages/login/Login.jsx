@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { login } from "../../redux/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { login, reset } from "../../redux/auth/authSlice";
 
 import "./Login.scss";
 
@@ -16,6 +16,18 @@ const Login = () => {
   const [loginError, setLoginError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isSuccess, isError, message } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (isSuccess) {
+      clearState();
+      navigate("/");
+    } else if (isError) {
+      setLoginError(message);
+    }
+
+    dispatch(reset());
+  }, [isSuccess, isError, message]);
 
   const validateForm = () => {
     const errorList = {};
@@ -33,13 +45,8 @@ const Login = () => {
     const errorList = validateForm();
     if (Object.keys(errorList).length > 0) return setErrors(errorList);
     setErrors({});
-    dispatch(login(formData)).then((res) => {
-      if (res.error) setLoginError(res.payload.message);
-      else {
-        clearState();
-        navigate("/");
-      }
-    });
+
+    dispatch(login(formData));
   };
 
   const handleChange = (event) => {
