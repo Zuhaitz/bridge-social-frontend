@@ -15,6 +15,7 @@
   }
 
   &__input {
+    width: 100%;
     font-size: 18px;
 
     outline: none;
@@ -29,14 +30,19 @@
     }
   }
 
-  &__searchEmpty {
-    width: 30px;
-
-    font-size: 18px;
-    text-align: center;
-
-    background-color: black;
+  &__cleanSearch {
+    display: none;
+    align-items: center;
+    background-color: $background-color-focus;
 
     cursor: pointer;
+
+    img {
+      width: 20px;
+    }
+
+    &--visible {
+      display: flex;
+    }
   }
 }
