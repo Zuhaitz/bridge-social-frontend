@@ -1,16 +1,34 @@
-import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, reset } from "../../redux/auth/authSlice";
 
-import homeSVG from "../../assets/icons/house-chimney.svg";
-import homeFillSVG from "../../assets/icons/house-chimney-fill.svg";
-import profileSVG from "../../assets/icons/user.svg";
-import profileFillSVG from "../../assets/icons/user-fill.svg";
+import homeIcon from "../../assets/icons/house-chimney.svg";
+import homeFillIcon from "../../assets/icons/house-chimney-fill.svg";
+import profileIcon from "../../assets/icons/user.svg";
+import profileFillIcon from "../../assets/icons/user-fill.svg";
+import logoutIcon from "../../assets/icons/sign-out-alt.svg";
 import "./Navbar.scss";
 
 const Navbar = () => {
   // const { token } = useSelector((state) => state.auth);
   const token = localStorage.getItem("token");
   const location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isSuccess, isError, message } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (isSuccess) navigate("/login");
+    else if (isError) console.log(message);
+
+    dispatch(reset());
+  }, [isSuccess, isError, message]);
+
+  const onLogout = (event) => {
+    event.preventDefault();
+    dispatch(logout());
+  };
 
   return (
     <section className="navbar sidebar">
@@ -23,7 +41,7 @@ const Navbar = () => {
         <div className="navbar__links">
           <a href="/" className="navbar__link">
             <img
-              src={location.pathname === "/" ? homeFillSVG : homeSVG}
+              src={location.pathname === "/" ? homeFillIcon : homeIcon}
               alt="home icon"
               className="navbar__icon"
             />
@@ -36,20 +54,29 @@ const Navbar = () => {
                 <img
                   src={
                     location.pathname === "/profile"
-                      ? profileFillSVG
-                      : profileSVG
+                      ? profileFillIcon
+                      : profileIcon
                   }
                   alt="profile icon"
                   className="navbar__icon"
                 />
                 <p>Profile</p>
               </a>
+
+              <a href="" onClick={onLogout} className="navbar__link">
+                <img
+                  src={logoutIcon}
+                  alt="logout icon"
+                  className="navbar__icon"
+                />
+                <p>Logout</p>
+              </a>
             </>
           ) : (
             <>
               <a href="/register" className="navbar__link">
                 <img
-                  src={profileSVG}
+                  src={profileIcon}
                   alt="register icon"
                   className="navbar__icon"
                 />
@@ -58,7 +85,7 @@ const Navbar = () => {
 
               <a href="/login" className="navbar__link">
                 <img
-                  src={profileSVG}
+                  src={profileIcon}
                   alt="login icon"
                   className="navbar__icon"
                 />
