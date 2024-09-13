@@ -4,14 +4,14 @@
   &__search {
     display: flex;
     gap: 10px;
-    padding: 10px 20px;
+    padding: 8px 15px;
 
     border-radius: 20px;
     background-color: $background-color-focus;
   }
 
   &__icon {
-    width: 21px;
+    width: 18px;
   }
 
   &__input {
