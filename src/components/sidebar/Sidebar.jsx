@@ -21,6 +21,7 @@ const Sidebar = () => {
           value={search}
           spellCheck="false"
           onChange={({ target }) => setSearch(target.value)}
+          tabIndex={-1}
           className="rightbar__input"
         />
         <button

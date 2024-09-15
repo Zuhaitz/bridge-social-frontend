@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../components/navbar/Navbar";
 import Sidebar from "../components/sidebar/Sidebar";
 import Overlay from "../components/overlay/Overlay";
+import PostForm from "../components/post-form/PostForm";
 
 const MainLayout = () => {
   const [posting, setPosting] = useState(false);
@@ -24,6 +25,7 @@ const MainLayout = () => {
       {posting && (
         <>
           <Overlay />
+          <PostForm setPosting={setPosting} />
         </>
       )}
     </>
