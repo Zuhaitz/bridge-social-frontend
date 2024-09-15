@@ -10,7 +10,7 @@ import profileFillIcon from "../../assets/icons/user-fill.svg";
 import logoutIcon from "../../assets/icons/sign-out-alt.svg";
 import "./Navbar.scss";
 
-const Navbar = () => {
+const Navbar = ({ setPosting }) => {
   // const { token } = useSelector((state) => state.auth);
   const token = localStorage.getItem("token");
   const location = useLocation();
@@ -95,7 +95,11 @@ const Navbar = () => {
           )}
         </div>
 
-        {token && <button className="navbar__button">Create post</button>}
+        {token && (
+          <button onClick={() => setPosting(true)} className="navbar__button">
+            Create post
+          </button>
+        )}
       </div>
     </section>
   );
