@@ -1,2 +1,6 @@
 .home {
+  &__form {
+    height: 50px;
+    border-bottom: 1px solid $ternary-text-color;
+  }
 }
