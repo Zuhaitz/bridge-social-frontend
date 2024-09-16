@@ -50,6 +50,9 @@ button {
 
 .container {
   width: 600px;
+  height: 100%;
+  border-right: 1px solid $ternary-text-color;
+  border-left: 1px solid $ternary-text-color;
 }
 
 .sidebar {
