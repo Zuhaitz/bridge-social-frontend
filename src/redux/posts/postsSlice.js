@@ -33,6 +33,7 @@ export const postsSlice = createSlice({
   initialState,
   reducers: {
     reset: (state) => {
+      state.isSuccess = false;
       state.isLoading = false;
     },
   },
