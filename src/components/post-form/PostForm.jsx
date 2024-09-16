@@ -6,7 +6,8 @@ import userIcon from "../../assets/icons/circle-user.svg";
 import "./PostForm.scss";
 
 const PostForm = ({ setPosting }) => {
-  const { user } = useSelector((state) => state.auth);
+  // const { user } = useSelector((state) => state.auth);
+  const user = localStorage.getItem("user");
 
   const limit = 300;
   const [remaining, setRemaining] = useState(limit);
