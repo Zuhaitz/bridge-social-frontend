@@ -11,6 +11,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getAll());
+    dispatch(reset());
   }, []);
 
   return (

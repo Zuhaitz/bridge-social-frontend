@@ -7,8 +7,20 @@ const getAll = async () => {
   return res.data;
 };
 
+const createPost = async (postData) => {
+  const token = JSON.parse(localStorage.getItem("token"));
+  const res = await axios.post(`${API_URL}/posts`, postData, {
+    headers: {
+      authorization: token,
+    },
+  });
+
+  return res.data;
+};
+
 const postsService = {
   getAll,
+  createPost,
 };
 
 export default postsService;

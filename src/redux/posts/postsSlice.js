@@ -3,6 +3,7 @@ import postsService from "./postsService";
 
 const initialState = {
   posts: [],
+  isSuccess: false,
   isLoading: false,
 };
 
@@ -15,6 +16,18 @@ export const getAll = createAsyncThunk("posts/getAll", async (thunkAPI) => {
   }
 });
 
+export const createPost = createAsyncThunk(
+  "posts/createPost",
+  async (userData, { rejectWithValue }) => {
+    try {
+      return await postsService.createPost(userData);
+    } catch (error) {
+      console.error("Create post error: ", error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const postsSlice = createSlice({
   name: "posts",
   initialState,
@@ -26,11 +39,14 @@ export const postsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAll.fulfilled, (state, action) => {
-        state.isLoading = false;
         state.posts = action.payload;
       })
       .addCase(getAll.pending, (state) => {
         state.isLoading = true;
+      })
+      .addCase(createPost.fulfilled, (state, action) => {
+        state.isSuccess = true;
+        state.posts.unshift(action.payload.post);
       });
   },
 });

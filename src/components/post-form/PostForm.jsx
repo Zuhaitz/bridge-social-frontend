@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import userIcon from "../../assets/icons/circle-user.svg";
 
 import "./PostForm.scss";
+import { createPost, reset } from "../../redux/posts/postsSlice";
 
 const PostForm = ({ setPosting }) => {
   // const { user } = useSelector((state) => state.auth);
@@ -12,6 +13,16 @@ const PostForm = ({ setPosting }) => {
   const limit = 300;
   const [remaining, setRemaining] = useState(limit);
   const [post, setPost] = useState("");
+  const dispatch = useDispatch();
+  const { isSuccess } = useSelector((state) => state.posts);
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(reset());
+      setPost("");
+      setPosting(false);
+    }
+  }, [isSuccess]);
 
   const handleTextInput = (event) => {
     event.preventDefault();
@@ -22,7 +33,7 @@ const PostForm = ({ setPosting }) => {
     setRemaining(limit - value.length);
     // style.height = "144px";
     // style.height = scrollHeight + "px";
-    console.log(scrollHeight);
+    // console.log(scrollHeight);
   };
 
   const handleCancel = (event) => {
@@ -32,13 +43,21 @@ const PostForm = ({ setPosting }) => {
     setPosting(false);
   };
 
+  const handlePublish = (event) => {
+    event.preventDefault();
+
+    dispatch(createPost({ content: post }));
+  };
+
   return (
     <div className="form-post">
       <div className="form-post__buttons">
         <button onClick={handleCancel} className="form-post__cancel">
           Cancel
         </button>
-        <button className="form-post__publish">Publish</button>
+        <button onClick={handlePublish} className="form-post__publish">
+          Publish
+        </button>
       </div>
 
       <div className="form-post__form">
