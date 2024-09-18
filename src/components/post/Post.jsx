@@ -42,27 +42,29 @@ const Post = ({ _id, content, createdBy, likes, comments, createdAt }) => {
   };
 
   return (
-    <div className="post">
-      <div className="post__picture">
-        <img src={createdBy.picture || userIcon} alt="user profile picture" />
-      </div>
-      <div className="post__body">
-        <p className="post__user">{createdBy.username}</p>
-        <p className="post__content">{content}</p>
+    <a href={`/post/${_id}`}>
+      <div className="post">
+        <div className="post__picture">
+          <img src={createdBy.picture || userIcon} alt="user profile picture" />
+        </div>
+        <div className="post__body">
+          <p className="post__user">{createdBy.username}</p>
+          <p className="post__content">{content}</p>
 
-        <div className="post__buttons">
-          <div className="post__button">
-            <img src={commentIcon} alt="comment icon" />
-            {comments.length > 0 && <p>{comments.length}</p>}
-          </div>
+          <div className="post__buttons">
+            <div className="post__button">
+              <img src={commentIcon} alt="comment icon" />
+              {comments.length > 0 && <p>{comments.length}</p>}
+            </div>
 
-          <div onClick={onLike} className="post__button">
-            <img src={liked ? likeFillIcon : likeIcon} alt="like icon" />
-            {listLikes.length > 0 && <p>{listLikes.length}</p>}
+            <div onClick={onLike} className="post__button">
+              <img src={liked ? likeFillIcon : likeIcon} alt="like icon" />
+              {listLikes.length > 0 && <p>{listLikes.length}</p>}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </a>
   );
 };
 

@@ -8,6 +8,7 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Profile from "./pages/profile/Profile";
 import AuthLayout from "./layouts/auth-layout/AuthLayout";
+import PostDetail from "./pages/post-detail/PostDetail";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route element={<MainLayout />}>
               <Route path="/" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/post/:id" element={<PostDetail />} />
             </Route>
             <Route element={<AuthLayout />}>
               <Route path="/login" element={<Login />} />
