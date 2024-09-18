@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { likePost, reset } from "../../redux/posts/postsSlice";
 
@@ -17,6 +18,7 @@ const Post = ({ _id, content, createdBy, likes, comments, createdAt }) => {
   const [liked, setLiked] = useState(isLiked);
   const [listLikes, setListLikes] = useState(likes);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (postLiked !== _id) return;
@@ -41,10 +43,15 @@ const Post = ({ _id, content, createdBy, likes, comments, createdAt }) => {
     dispatch(likePost({ id: _id, like: !liked }));
   };
 
+  const goToProfile = (event) => {
+    event.preventDefault();
+    navigate(`/profile/${createdBy._id}`);
+  };
+
   return (
     <a href={`/post/${_id}`}>
       <div className="post">
-        <div className="post__picture">
+        <div onClick={goToProfile} className="post__picture">
           <img src={createdBy.picture || userIcon} alt="user profile picture" />
         </div>
         <div className="post__body">
