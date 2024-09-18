@@ -10,7 +10,7 @@ import "./Post.scss";
 const Post = ({ _id, content, createdBy, likes, comments, createdAt }) => {
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const isLiked = likes.includes(user._id);
+  const isLiked = user ? likes.includes(user._id) : false;
   const [liked, setLiked] = useState(isLiked);
   const [listLikes, setListLikes] = useState(likes);
 
