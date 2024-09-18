@@ -1,2 +1,25 @@
 .profile {
+  &__topbar {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    height: 50px;
+    padding: 0 20px;
+
+    border-bottom: 1px solid $ternary-text-color;
+  }
+
+  &__icon {
+    width: 20px;
+  }
+
+  &__top-name {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  &__top-data {
+    font-size: 14px;
+    color: $secondary-text-color;
+  }
 }
