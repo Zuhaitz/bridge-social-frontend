@@ -5,6 +5,7 @@ const initialState = {
   posts: [],
   isSuccess: false,
   isLoading: false,
+  postLiked: "",
 };
 
 export const getAll = createAsyncThunk("posts/getAll", async (thunkAPI) => {
@@ -28,6 +29,19 @@ export const createPost = createAsyncThunk(
   }
 );
 
+export const likePost = createAsyncThunk(
+  "posts/likePost",
+  async (postData, { rejectWithValue }) => {
+    try {
+      const { id, like } = postData;
+      return await postsService.likePost(id, like);
+    } catch (error) {
+      console.error("Like post error: ", error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const postsSlice = createSlice({
   name: "posts",
   initialState,
@@ -35,6 +49,7 @@ export const postsSlice = createSlice({
     reset: (state) => {
       state.isSuccess = false;
       state.isLoading = false;
+      state.postLiked = "";
     },
   },
   extraReducers: (builder) => {
@@ -48,6 +63,9 @@ export const postsSlice = createSlice({
       .addCase(createPost.fulfilled, (state, action) => {
         state.isSuccess = true;
         state.posts.unshift(action.payload.post);
+      })
+      .addCase(likePost.fulfilled, (state, action) => {
+        state.postLiked = action.payload._id;
       });
   },
 });

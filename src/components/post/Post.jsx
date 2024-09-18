@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { likePost, reset } from "../../redux/posts/postsSlice";
 
 import userIcon from "../../assets/icons/circle-user.svg";
 import commentIcon from "../../assets/icons/comment-alt-middle.svg";
@@ -8,15 +10,16 @@ import likeFillIcon from "../../assets/icons/thumbs-up-fill.svg";
 import "./Post.scss";
 
 const Post = ({ _id, content, createdBy, likes, comments, createdAt }) => {
+  const { postLiked } = useSelector((state) => state.posts);
   const user = JSON.parse(localStorage.getItem("user"));
 
   const isLiked = user ? likes.includes(user._id) : false;
   const [liked, setLiked] = useState(isLiked);
   const [listLikes, setListLikes] = useState(likes);
+  const dispatch = useDispatch();
 
-  const onLike = (event) => {
-    event.preventDefault();
-    if (!user) return;
+  useEffect(() => {
+    if (postLiked !== _id) return;
 
     if (!liked) {
       setListLikes([...listLikes, user._id]);
@@ -27,6 +30,15 @@ const Post = ({ _id, content, createdBy, likes, comments, createdAt }) => {
     }
 
     !liked ? setLiked(true) : setLiked(false);
+
+    dispatch(reset());
+  }, [postLiked]);
+
+  const onLike = (event) => {
+    event.preventDefault();
+    if (!user) return;
+
+    dispatch(likePost({ id: _id, like: !liked }));
   };
 
   return (
