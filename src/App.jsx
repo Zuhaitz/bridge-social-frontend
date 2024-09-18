@@ -18,7 +18,7 @@ function App() {
           <Routes>
             <Route element={<MainLayout />}>
               <Route path="/" element={<Home />} />
-              <Route path="/profile" element={<Profile />} />
+              <Route path="/profile/:id" element={<Profile />} />
               <Route path="/post/:id" element={<PostDetail />} />
             </Route>
             <Route element={<AuthLayout />}>

@@ -12,7 +12,9 @@ import "./Navbar.scss";
 
 const Navbar = ({ setPosting }) => {
   // const { token } = useSelector((state) => state.auth);
-  const token = localStorage.getItem("token");
+  const token = JSON.parse(localStorage.getItem("token"));
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -50,7 +52,7 @@ const Navbar = ({ setPosting }) => {
 
           {token ? (
             <>
-              <a href="/profile" className="navbar__link">
+              <a href={`/profile/${user._id}`} className="navbar__link">
                 <img
                   src={
                     location.pathname === "/profile"
