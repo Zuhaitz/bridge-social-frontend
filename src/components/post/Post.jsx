@@ -18,16 +18,15 @@ const Post = ({ _id, content, createdBy, likes, comments, createdAt }) => {
     event.preventDefault();
     if (!user) return;
 
-    const copy = new Set(listLikes);
     if (!liked) {
       setListLikes([...listLikes, user._id]);
     } else {
+      const copy = new Set(listLikes);
       copy.delete(user._id);
       setListLikes([...copy]);
     }
-    !liked ? setLiked(true) : setLiked(false);
 
-    listLikes.remove();
+    !liked ? setLiked(true) : setLiked(false);
   };
 
   return (
