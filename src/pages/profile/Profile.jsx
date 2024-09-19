@@ -1,9 +1,11 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getById } from "../../redux/users/usersSlice";
 
 import backIcon from "../../assets/icons/angle-left.svg";
+import menuIcon from "../../assets/icons/menu-dots.svg";
+import banner from "../../assets/images/wonderlands-melee-build.png";
 
 import "./Profile.scss";
 
@@ -11,11 +13,16 @@ const Profile = () => {
   const { id } = useParams();
   const { profile } = useSelector((state) => state.users);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getById(id));
   }, []);
+
+  const onGoBack = (event) => {
+    navigate("/");
+  };
 
   return (
     <div className="profile">
@@ -24,14 +31,48 @@ const Profile = () => {
       ) : (
         <>
           <div className="profile__topbar">
-            <img src={backIcon} alt="go back icon" className="profile__icon" />
+            <div onClick={onGoBack} className="profile__icon">
+              <img src={backIcon} alt="go back icon" />
+            </div>
 
             <div>
               <p className="profile__top-name">{profile.username}</p>
               <p className="profile__top-data">{profile.posts.length} posts</p>
             </div>
           </div>
-          <div className="profile__card"></div>
+
+          <div>
+            <div className="profile__banner">
+              <img src={profile.banner || banner} alt="user banner" />
+            </div>
+
+            <div className="profile__container">
+              <div className="profile__picture">
+                <img
+                  src={profile.picture || banner}
+                  alt="user profile picture"
+                />
+              </div>
+
+              <div className="profile__buttons">
+                <button className="profile__edit">Edit profile</button>
+
+                <button className="profile__menu">
+                  <img src={menuIcon} alt="menu icon" />
+                </button>
+              </div>
+
+              <div>
+                <p>{profile.username}</p>
+                <p>@{profile.username.toLowerCase()}</p>
+                <div>
+                  <p>{profile.followers.length} followers</p>
+                  <p>{profile.follows.length} follows</p>
+                  <p>{profile.posts.length} posts</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </>
       )}
     </div>
