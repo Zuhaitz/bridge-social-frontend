@@ -46,7 +46,7 @@ const PostForm = ({ setPosting }) => {
   const handlePublish = (event) => {
     event.preventDefault();
 
-    dispatch(createPost({ content: post }));
+    dispatch(createPost({ content: post, createdBy: user }));
   };
 
   return (

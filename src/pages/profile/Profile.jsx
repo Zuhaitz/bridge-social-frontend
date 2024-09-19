@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getById } from "../../redux/users/usersSlice";
+import { getById, getPostsById, reset } from "../../redux/users/usersSlice";
+
 import Feed from "../../components/feed/Feed";
 
 import backIcon from "../../assets/icons/angle-left.svg";
@@ -12,14 +13,20 @@ import "./Profile.scss";
 
 const Profile = () => {
   const { id } = useParams();
-  const { profile } = useSelector((state) => state.users);
+  const { profile, posts } = useSelector((state) => state.users);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(reset());
     dispatch(getById(id));
   }, []);
+
+  useEffect(() => {
+    if (!profile) return;
+    dispatch(getPostsById(id));
+  }, [profile]);
 
   const onGoBack = (event) => {
     event.preventDefault();
@@ -87,7 +94,7 @@ const Profile = () => {
           </div>
 
           <div className="profile__sections"></div>
-          {/* <Feed posts={profile.posts} /> */}
+          {posts && <Feed posts={posts} />}
         </>
       )}
     </div>

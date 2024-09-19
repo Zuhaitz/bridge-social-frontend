@@ -18,6 +18,18 @@ export const getById = createAsyncThunk(
   }
 );
 
+export const getPostsById = createAsyncThunk(
+  "users/getPostsById",
+  async (userId, { rejectWithValue }) => {
+    try {
+      return await usersService.getPostsById(userId);
+    } catch (error) {
+      console.error("Posts of user by id error: ", error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const usersSlice = createSlice({
   name: "users",
   initialState,
@@ -27,9 +39,13 @@ export const usersSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getById.fulfilled, (state, action) => {
-      state.profile = action.payload;
-    });
+    builder
+      .addCase(getById.fulfilled, (state, action) => {
+        state.profile = action.payload;
+      })
+      .addCase(getPostsById.fulfilled, (state, action) => {
+        state.posts = action.payload.posts;
+      });
   },
 });
 
