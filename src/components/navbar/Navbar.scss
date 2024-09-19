@@ -4,12 +4,13 @@
   width: 300px;
   padding: 10px;
 
+  user-select: none;
+
   // border-right: 2px solid $ternary-text-color;
 
   &__title {
     font-size: 26px;
     font-weight: bold;
-    user-select: none;
   }
 
   &__links {
