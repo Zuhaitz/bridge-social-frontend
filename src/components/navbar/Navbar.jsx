@@ -16,6 +16,7 @@ const Navbar = ({ setPosting }) => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const location = useLocation();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isSuccess, isError, message } = useSelector((state) => state.auth);
@@ -55,7 +56,7 @@ const Navbar = ({ setPosting }) => {
               <a href={`/profile/${user._id}`} className="navbar__link">
                 <img
                   src={
-                    location.pathname === "/profile"
+                    location.pathname === `/profile/${user._id}`
                       ? profileFillIcon
                       : profileIcon
                   }

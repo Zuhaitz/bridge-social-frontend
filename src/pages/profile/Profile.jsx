@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getById } from "../../redux/users/usersSlice";
+import Feed from "../../components/feed/Feed";
 
 import backIcon from "../../assets/icons/angle-left.svg";
 import menuIcon from "../../assets/icons/menu-dots.svg";
@@ -21,6 +22,7 @@ const Profile = () => {
   }, []);
 
   const onGoBack = (event) => {
+    event.preventDefault();
     navigate("/");
   };
 
@@ -37,7 +39,7 @@ const Profile = () => {
 
             <div>
               <p className="profile__top-name">{profile.username}</p>
-              <p className="profile__top-data">{profile.posts.length} posts</p>
+              <p className="profile__top-data">{profile.posts} posts</p>
             </div>
           </div>
 
@@ -63,16 +65,29 @@ const Profile = () => {
               </div>
 
               <div>
-                <p>{profile.username}</p>
-                <p>@{profile.username.toLowerCase()}</p>
-                <div>
-                  <p>{profile.followers.length} followers</p>
-                  <p>{profile.follows.length} follows</p>
-                  <p>{profile.posts.length} posts</p>
+                <p className="profile__username">{profile.username}</p>
+
+                <p className="profile__mention">
+                  @{profile.username.toLowerCase()}
+                </p>
+
+                <div className="profile__metrics">
+                  <p>
+                    <span>{profile.followers}</span> followers
+                  </p>
+                  <p>
+                    <span>{profile.follows}</span> follows
+                  </p>
+                  <p>
+                    <span>{profile.posts}</span> posts
+                  </p>
                 </div>
               </div>
             </div>
           </div>
+
+          <div className="profile__sections"></div>
+          {/* <Feed posts={profile.posts} /> */}
         </>
       )}
     </div>

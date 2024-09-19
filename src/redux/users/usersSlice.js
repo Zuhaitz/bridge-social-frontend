@@ -3,6 +3,7 @@ import usersService from "./usersService";
 
 const initialState = {
   profile: null,
+  posts: null,
 };
 
 export const getById = createAsyncThunk(
