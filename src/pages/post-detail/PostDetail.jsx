@@ -79,6 +79,7 @@ const PostDetail = () => {
             <div onClick={onGoBack} className="post-detail__icon">
               <img src={backIcon} alt="go back icon" />
             </div>
+            <p>Post</p>
           </div>
 
           <div className="post-detail__post">
@@ -104,7 +105,7 @@ const PostDetail = () => {
             <div className="post-detail__buttons">
               <div className="post-detail__button">
                 <img src={commentIcon} alt="comment icon" />
-                {post.comments > 0 && <p>{post.comments}</p>}
+                {post.comments.length > 0 && <p>{post.comments.length}</p>}
               </div>
 
               <div onClick={onLike} className="post-detail__button">
