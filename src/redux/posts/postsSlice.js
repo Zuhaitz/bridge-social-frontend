@@ -63,7 +63,6 @@ export const postsSlice = createSlice({
       state.isSuccess = false;
       state.isLoading = false;
       state.postLiked = "";
-      state.post = null;
     },
   },
   extraReducers: (builder) => {
@@ -76,10 +75,6 @@ export const postsSlice = createSlice({
       })
       .addCase(getById.fulfilled, (state, action) => {
         state.post = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(getById.pending, (state, action) => {
-        state.isLoading = true;
       })
       .addCase(createPost.fulfilled, (state, action) => {
         state.isSuccess = true;
