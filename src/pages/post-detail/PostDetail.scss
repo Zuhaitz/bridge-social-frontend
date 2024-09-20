@@ -1,0 +1,33 @@
+.post-detail {
+  // TOPBAR
+  &__topbar {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    height: 50px;
+    padding: 0 20px;
+
+    border-bottom: 1px solid $ternary-text-color;
+  }
+
+  &__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+
+    cursor: pointer;
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
+
+    &:hover {
+      background-color: $background-color-focus;
+    }
+  }
+}

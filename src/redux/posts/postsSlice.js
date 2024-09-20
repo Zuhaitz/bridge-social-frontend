@@ -3,6 +3,7 @@ import postsService from "./postsService";
 
 const initialState = {
   posts: [],
+  post: null,
   isSuccess: false,
   isLoading: false,
   postLiked: "",
@@ -16,6 +17,18 @@ export const getAll = createAsyncThunk("posts/getAll", async (thunkAPI) => {
     return thunkAPI.rejectWithValue(error.response.data);
   }
 });
+
+export const getById = createAsyncThunk(
+  "posts/getById",
+  async (postId, thunkAPI) => {
+    try {
+      return await postsService.getById(postId);
+    } catch (error) {
+      console.log("Get post by id error: ", error);
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const createPost = createAsyncThunk(
   "posts/createPost",
@@ -50,6 +63,7 @@ export const postsSlice = createSlice({
       state.isSuccess = false;
       state.isLoading = false;
       state.postLiked = "";
+      state.post = null;
     },
   },
   extraReducers: (builder) => {
@@ -58,6 +72,13 @@ export const postsSlice = createSlice({
         state.posts = action.payload;
       })
       .addCase(getAll.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getById.fulfilled, (state, action) => {
+        state.post = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getById.pending, (state, action) => {
         state.isLoading = true;
       })
       .addCase(createPost.fulfilled, (state, action) => {

@@ -7,6 +7,11 @@ const getAll = async () => {
   return res.data;
 };
 
+const getById = async (postId) => {
+  const res = await axios.get(`${API_URL}/posts/id/` + postId);
+  return res.data;
+};
+
 const createPost = async (postData) => {
   const token = JSON.parse(localStorage.getItem("token"));
   const res = await axios.post(`${API_URL}/posts`, postData, {
@@ -46,6 +51,7 @@ const likePost = async (postId, isLiked = true) => {
 
 const postsService = {
   getAll,
+  getById,
   createPost,
   likePost,
 };

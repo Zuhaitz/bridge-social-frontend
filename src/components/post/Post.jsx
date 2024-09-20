@@ -61,7 +61,7 @@ const Post = ({ _id, content, createdBy, likes, comments, createdAt }) => {
           <div className="post__buttons">
             <div className="post__button">
               <img src={commentIcon} alt="comment icon" />
-              {comments.length > 0 && <p>{comments.length}</p>}
+              {comments > 0 && <p>{comments}</p>}
             </div>
 
             <div onClick={onLike} className="post__button">
