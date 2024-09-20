@@ -1,0 +1,55 @@
+.comment-form {
+  display: flex;
+  gap: 10px;
+  padding: 15px;
+
+  border-bottom: 1px solid $ternary-text-color;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  &__textarea {
+    width: 100%;
+
+    font-size: 18px;
+    // Not compatible with Firefox
+    field-sizing: content;
+
+    // Remove textarea style
+    outline: none;
+    border: none;
+    resize: none;
+
+    background-color: inherit;
+
+    &::placeholder {
+      color: $secondary-text-color;
+    }
+  }
+
+  &__options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 10px;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__respond {
+    padding: 8px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 30px;
+  }
+}

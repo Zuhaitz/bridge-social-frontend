@@ -11,6 +11,7 @@ import likeFillIcon from "../../assets/icons/thumbs-up-fill.svg";
 
 import "./PostDetail.scss";
 import Feed from "../../components/feed/Feed";
+import CommentForm from "../../components/comment-form/CommentForm";
 
 const PostDetail = () => {
   const { id } = useParams();
@@ -114,6 +115,8 @@ const PostDetail = () => {
               </div>
             </div>
           </div>
+
+          {user && <CommentForm postId={id} />}
 
           <Feed posts={post.comments} />
         </>
