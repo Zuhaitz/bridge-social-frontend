@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import userIcon from "../../assets/icons/circle-user.svg";
 
 import "./CommentForm.scss";
+import { useDispatch } from "react-redux";
+import { postComment } from "../../redux/comments/commentsSlice";
 
 const CommentForm = ({ postId }) => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -12,6 +14,7 @@ const CommentForm = ({ postId }) => {
   const [comment, setComment] = useState("");
   const [remaining, setRemaining] = useState(limit);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleTextInput = (event) => {
     event.preventDefault();
@@ -32,6 +35,7 @@ const CommentForm = ({ postId }) => {
     if (comment.replace(/\s/g, "").length <= 0) return;
 
     console.log(postId, comment);
+    dispatch(postComment(postId, { content: comment }));
   };
 
   return (
