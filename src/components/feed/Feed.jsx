@@ -1,12 +1,14 @@
 import React from "react";
 import Post from "../post/Post";
+import Comment from "../comment/Comment";
 
-const Feed = ({ posts }) => {
+const Feed = ({ posts, comments }) => {
   return (
     <div>
-      {posts.map((post) => (
-        <Post key={post._id} {...post} />
-      ))}
+      {posts && posts.map((post) => <Post key={post._id} {...post} />)}
+
+      {comments &&
+        comments.map((comment) => <Comment key={comment._id} {...comment} />)}
     </div>
   );
 };

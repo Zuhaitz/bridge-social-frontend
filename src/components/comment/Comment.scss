@@ -1,0 +1,63 @@
+.comment {
+  display: flex;
+  gap: 15px;
+  padding: 10px 15px;
+
+  border-top: 1px solid $ternary-text-color;
+
+  &__picture {
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 100%;
+      background-color: $ternary-text-color;
+    }
+  }
+
+  &__container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+  }
+
+  &__body {
+    width: 100%;
+  }
+
+  &__user {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  &__content {
+    font-size: 17px;
+    overflow-wrap: anywhere;
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 5px;
+    width: fit-content;
+    height: fit-content;
+
+    cursor: pointer;
+
+    img {
+      width: 24px;
+      height: auto;
+    }
+
+    p {
+      font-size: 24px;
+      margin-bottom: 2px;
+      color: $secondary-text-color;
+    }
+
+    &:hover {
+      border-radius: 10px;
+      background-color: $background-color-focus;
+    }
+  }
+}

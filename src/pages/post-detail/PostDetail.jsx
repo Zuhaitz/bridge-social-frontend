@@ -130,7 +130,7 @@ const PostDetail = () => {
 
           {user && <CommentForm postId={id} />}
 
-          {comments && <Feed posts={comments} />}
+          {comments && <Feed comments={comments} />}
         </>
       )}
     </div>
