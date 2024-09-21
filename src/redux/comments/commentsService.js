@@ -17,8 +17,35 @@ const postComment = async (postId, commentData) => {
   return res.data;
 };
 
+const likeComment = async (commentId, isLiked = true) => {
+  const token = JSON.parse(localStorage.getItem("token"));
+
+  if (isLiked) {
+    const res = await axios.put(
+      `${API_URL}/comments/like/` + commentId,
+      {},
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+
+    return res.data;
+  }
+
+  const res = await axios.delete(`${API_URL}/comments/like/` + commentId, {
+    headers: {
+      authorization: token,
+    },
+  });
+
+  return res.data;
+};
+
 const commentsService = {
   postComment,
+  likeComment,
 };
 
 export default commentsService;

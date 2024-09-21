@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { likeComment, reset } from "../../redux/comments/commentsSlice";
 
 import userIcon from "../../assets/icons/circle-user.svg";
 import likeIcon from "../../assets/icons/thumbs-up.svg";
@@ -9,19 +11,35 @@ import "./Comment.scss";
 
 const Comment = ({ _id, content, createdBy, likes }) => {
   const user = JSON.parse(localStorage.getItem("user"));
-  // const { postLiked } = useSelector((state) => state.comments);
+  const { commentLiked } = useSelector((state) => state.comments);
 
-  // const isLiked = user ? likes.includes(user._id) : false;
-  const [liked, setLiked] = useState(false);
+  const isLiked = user ? likes.includes(user._id) : false;
+  const [liked, setLiked] = useState(isLiked);
   const [listLikes, setListLikes] = useState(likes);
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (commentLiked !== _id) return;
+
+    if (!liked) {
+      setListLikes([...listLikes, user._id]);
+    } else {
+      const copy = new Set(listLikes);
+      copy.delete(user._id);
+      setListLikes([...copy]);
+    }
+
+    !liked ? setLiked(true) : setLiked(false);
+
+    dispatch(reset());
+  }, [commentLiked]);
 
   const onLike = (event) => {
     event.preventDefault();
     if (!user) return;
 
-    // dispatch(likePost({ id: _id, like: !liked }));
+    dispatch(likeComment({ id: _id, isLiked: !liked }));
   };
 
   const goToProfile = (event) => {
