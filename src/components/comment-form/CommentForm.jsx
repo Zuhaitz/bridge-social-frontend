@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import userIcon from "../../assets/icons/circle-user.svg";
 
 import "./CommentForm.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postComment } from "../../redux/comments/commentsSlice";
 
 const CommentForm = ({ postId }) => {
@@ -13,6 +13,7 @@ const CommentForm = ({ postId }) => {
   const limit = 300;
   const [comment, setComment] = useState("");
   const [remaining, setRemaining] = useState(limit);
+  const { comment: com, isSuccess } = useSelector((state) => state.comments);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -34,8 +35,7 @@ const CommentForm = ({ postId }) => {
     event.preventDefault();
     if (comment.replace(/\s/g, "").length <= 0) return;
 
-    console.log(postId, comment);
-    dispatch(postComment(postId, { content: comment }));
+    dispatch(postComment({ post: postId, content: comment }));
   };
 
   return (

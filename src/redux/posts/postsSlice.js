@@ -4,6 +4,7 @@ import postsService from "./postsService";
 const initialState = {
   posts: [],
   post: null,
+  comments: null,
   isSuccess: false,
   isLoading: false,
   postLiked: "",
@@ -25,6 +26,18 @@ export const getById = createAsyncThunk(
       return await postsService.getById(postId);
     } catch (error) {
       console.log("Get post by id error: ", error);
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const getCommentsById = createAsyncThunk(
+  "posts/getCommentsById",
+  async (postId, thunkAPI) => {
+    try {
+      return await postsService.getCommentsById(postId);
+    } catch (error) {
+      console.log("Get post comments by id error: ", error);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -75,6 +88,9 @@ export const postsSlice = createSlice({
       })
       .addCase(getById.fulfilled, (state, action) => {
         state.post = action.payload;
+      })
+      .addCase(getCommentsById.fulfilled, (state, action) => {
+        state.comments = action.payload.comments;
       })
       .addCase(createPost.fulfilled, (state, action) => {
         state.isSuccess = true;

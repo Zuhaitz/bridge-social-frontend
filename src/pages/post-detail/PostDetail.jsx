@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getById, likePost, reset } from "../../redux/posts/postsSlice";
+import {
+  getById,
+  getCommentsById,
+  likePost,
+  reset,
+} from "../../redux/posts/postsSlice";
 
 import backIcon from "../../assets/icons/angle-left.svg";
 import userIcon from "../../assets/icons/circle-user.svg";
@@ -15,12 +20,12 @@ import CommentForm from "../../components/comment-form/CommentForm";
 
 const PostDetail = () => {
   const { id } = useParams();
-  const { post, postLiked } = useSelector((state) => state.posts);
   const user = JSON.parse(localStorage.getItem("user"));
+  const { post, comments, postLiked } = useSelector((state) => state.posts);
+  const { isSuccess } = useSelector((state) => state.comments);
 
   const [liked, setLiked] = useState(0);
   const [listLikes, setListLikes] = useState(0);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -32,10 +37,17 @@ const PostDetail = () => {
   useEffect(() => {
     if (!post) return;
 
+    dispatch(getCommentsById(id));
+
     const isLiked = user ? post.likes.includes(user._id) : false;
     setLiked(isLiked);
     setListLikes(post.likes);
   }, [post]);
+
+  useEffect(() => {
+    if (!isSuccess) return;
+    dispatch(getCommentsById(id));
+  }, [isSuccess]);
 
   useEffect(() => {
     if (postLiked !== id) return;
@@ -118,7 +130,7 @@ const PostDetail = () => {
 
           {user && <CommentForm postId={id} />}
 
-          <Feed posts={post.comments} />
+          {comments && <Feed posts={comments} />}
         </>
       )}
     </div>
