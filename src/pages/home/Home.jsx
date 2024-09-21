@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAll, reset } from "../../redux/posts/postsSlice";
 import Feed from "../../components/feed/Feed";
 
+import mainIcon from "../../assets/icons/flame.svg";
+
 import "./Home.scss";
 
 const Home = () => {
@@ -16,7 +18,9 @@ const Home = () => {
 
   return (
     <div className="home">
-      <div className="home__form"></div>
+      <div className="home__top">
+        <img src={mainIcon} alt="page icon" />
+      </div>
       {isLoading ? <p>Loading...</p> : <Feed posts={posts} />}
     </div>
   );
