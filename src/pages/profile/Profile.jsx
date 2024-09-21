@@ -6,8 +6,8 @@ import { getById, getPostsById, reset } from "../../redux/users/usersSlice";
 import Feed from "../../components/feed/Feed";
 
 import backIcon from "../../assets/icons/angle-left.svg";
+import userIcon from "../../assets/icons/circle-user.svg";
 import menuIcon from "../../assets/icons/menu-dots.svg";
-import banner from "../../assets/images/wonderlands-melee-build.png";
 
 import "./Profile.scss";
 
@@ -52,13 +52,13 @@ const Profile = () => {
 
           <div>
             <div className="profile__banner">
-              <img src={profile.banner || banner} alt="user banner" />
+              {profile.banner && <img src={profile.banner} alt="user banner" />}
             </div>
 
             <div className="profile__container">
               <div className="profile__picture">
                 <img
-                  src={profile.picture || banner}
+                  src={profile.picture || userIcon}
                   alt="user profile picture"
                 />
               </div>
