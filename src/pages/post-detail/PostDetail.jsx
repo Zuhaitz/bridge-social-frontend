@@ -37,7 +37,7 @@ const PostDetail = () => {
   useEffect(() => {
     if (!post) return;
 
-    dispatch(getCommentsById(id));
+    if (post.comments > 0) dispatch(getCommentsById(id));
 
     const isLiked = user ? post.likes.includes(user._id) : false;
     setLiked(isLiked);
@@ -118,7 +118,7 @@ const PostDetail = () => {
             <div className="post-detail__buttons">
               <div className="post-detail__button">
                 <img src={commentIcon} alt="comment icon" />
-                {post.comments.length > 0 && <p>{post.comments.length}</p>}
+                {post.comments > 0 && <p>{post.comments}</p>}
               </div>
 
               <div onClick={onLike} className="post-detail__button">
