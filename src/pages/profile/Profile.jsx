@@ -14,6 +14,7 @@ import "./Profile.scss";
 const Profile = () => {
   const { id } = useParams();
   const { profile, posts } = useSelector((state) => state.users);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -64,7 +65,9 @@ const Profile = () => {
               </div>
 
               <div className="profile__buttons">
-                <button className="profile__edit">Edit profile</button>
+                {user && user._id === id && (
+                  <button className="profile__edit">Edit profile</button>
+                )}
 
                 <button className="profile__menu">
                   <img src={menuIcon} alt="menu icon" />
