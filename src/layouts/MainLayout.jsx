@@ -8,9 +8,13 @@ import PostForm from "../components/post-form/PostForm";
 const MainLayout = () => {
   const [posting, setPosting] = useState(false);
 
+  // https://medium.com/yet-sh/in-react-how-to-prevent-body-from-scrolling-when-a-modal-is-opened-bf3b90647902
   useEffect(() => {
     posting
-      ? document.body.setAttribute("style", `position: fixed`)
+      ? document.body.setAttribute(
+          "style",
+          `position: fixed; left: 0; right: 0;`
+        )
       : document.body.setAttribute("style", "");
   }, [posting]);
 

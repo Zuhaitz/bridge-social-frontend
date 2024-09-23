@@ -68,6 +68,7 @@
     top: -40px;
     left: 10px;
     display: flex;
+    justify-content: center;
     align-items: center;
     width: 100px;
     height: 100px;
@@ -79,7 +80,7 @@
     background-color: $ternary-text-color;
 
     img {
-      width: 100%;
+      height: 100%;
     }
   }
 

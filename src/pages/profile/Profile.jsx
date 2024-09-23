@@ -34,13 +34,21 @@ const Profile = () => {
 
   useEffect(() => {
     editing
-      ? document.body.setAttribute("style", `position: fixed`)
+      ? document.body.setAttribute(
+          "style",
+          `position: fixed; left: 0; right: 0;`
+        )
       : document.body.setAttribute("style", "");
   }, [editing]);
 
   const onGoBack = (event) => {
     event.preventDefault();
     navigate("/");
+  };
+
+  const onEditProfile = (event) => {
+    event.preventDefault();
+    setEditing(true);
   };
 
   return (
@@ -75,7 +83,9 @@ const Profile = () => {
 
               <div className="profile__buttons">
                 {user && user._id === id && (
-                  <button className="profile__edit">Edit profile</button>
+                  <button onClick={onEditProfile} className="profile__edit">
+                    Edit profile
+                  </button>
                 )}
 
                 <button className="profile__menu">
@@ -111,7 +121,7 @@ const Profile = () => {
           {editing && (
             <>
               <Overlay />
-              <ProfileForm editing={editing} />
+              <ProfileForm setEditing={setEditing} profile={profile} />
             </>
           )}
         </>
