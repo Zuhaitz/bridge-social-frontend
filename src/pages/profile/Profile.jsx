@@ -120,7 +120,7 @@ const Profile = () => {
 
           {editing && (
             <>
-              <Overlay />
+              <Overlay setVariable={setEditing} />
               <ProfileForm setEditing={setEditing} profile={profile} />
             </>
           )}

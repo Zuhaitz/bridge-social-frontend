@@ -34,7 +34,7 @@ const MainLayout = () => {
 
       {posting && (
         <>
-          <Overlay />
+          <Overlay setVariable={setPosting} />
           <PostForm setPosting={setPosting} />
         </>
       )}
