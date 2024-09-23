@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getById, getPostsById, reset } from "../../redux/users/usersSlice";
 
 import Feed from "../../components/feed/Feed";
+import Overlay from "../../components/overlay/Overlay";
+import ProfileForm from "../../components/profile-form/ProfileForm";
 
 import backIcon from "../../assets/icons/angle-left.svg";
 import userIcon from "../../assets/icons/circle-user.svg";
@@ -16,6 +18,7 @@ const Profile = () => {
   const { profile, posts } = useSelector((state) => state.users);
   const user = JSON.parse(localStorage.getItem("user"));
 
+  const [editing, setEditing] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -28,6 +31,12 @@ const Profile = () => {
     if (!profile) return;
     dispatch(getPostsById(id));
   }, [profile]);
+
+  useEffect(() => {
+    editing
+      ? document.body.setAttribute("style", `position: fixed`)
+      : document.body.setAttribute("style", "");
+  }, [editing]);
 
   const onGoBack = (event) => {
     event.preventDefault();
@@ -98,6 +107,13 @@ const Profile = () => {
 
           <div className="profile__sections"></div>
           {posts && <Feed posts={posts} />}
+
+          {editing && (
+            <>
+              <Overlay />
+              <ProfileForm editing={editing} />
+            </>
+          )}
         </>
       )}
     </div>

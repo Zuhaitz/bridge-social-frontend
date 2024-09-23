@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/navbar/Navbar";
 import Sidebar from "../components/sidebar/Sidebar";
@@ -7,6 +7,12 @@ import PostForm from "../components/post-form/PostForm";
 
 const MainLayout = () => {
   const [posting, setPosting] = useState(false);
+
+  useEffect(() => {
+    posting
+      ? document.body.setAttribute("style", `position: fixed`)
+      : document.body.setAttribute("style", "");
+  }, [posting]);
 
   return (
     <>
