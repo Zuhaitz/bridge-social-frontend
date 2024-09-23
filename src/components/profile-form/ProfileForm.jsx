@@ -1,5 +1,7 @@
 import React from "react";
 
+import cameraIcon from "../../assets/icons/camera.svg";
+
 import "./ProfileForm.scss";
 
 const ProfileForm = ({ setEditing, profile }) => {
@@ -12,8 +14,13 @@ const ProfileForm = ({ setEditing, profile }) => {
     <div className="profile-form">
       <p className="profile-form__title">Edit my profile</p>
 
-      <div className="profile-form__banner">
-        {profile.banner && <img src={profile.banner} alt="user banner" />}
+      <div className="profile-form__image">
+        <div className="profile-form__banner">
+          {profile.banner && <img src={profile.banner} alt="user banner" />}
+        </div>
+        <div className="profile-form__icon">
+          <img src={cameraIcon} alt="change banner icon" />
+        </div>
       </div>
 
       <div className="profile-form__container">

@@ -19,6 +19,30 @@
     margin: 20px;
   }
 
+  &__image {
+    position: relative;
+  }
+
+  &__icon {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+
+    border-radius: 100%;
+
+    background-color: $background-color;
+
+    img {
+      width: 100%;
+      padding: 5px;
+    }
+  }
+
   &__banner {
     display: flex;
     align-items: center;
