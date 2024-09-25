@@ -4,6 +4,8 @@ import usersService from "./usersService";
 const initialState = {
   profile: null,
   posts: null,
+  isSuccess: false,
+  isLoading: false,
 };
 
 export const getById = createAsyncThunk(
@@ -30,12 +32,25 @@ export const getPostsById = createAsyncThunk(
   }
 );
 
+export const uploadImages = createAsyncThunk(
+  "users/uploadImages",
+  async (images, { rejectWithValue }) => {
+    try {
+      return await usersService.uploadImages(images);
+    } catch (error) {
+      console.error("Upload images of user error: ", error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
     reset: (state) => {
-      state.profile = null;
+      state.isSuccess = false;
+      state.isLoading = false;
     },
   },
   extraReducers: (builder) => {
@@ -45,6 +60,15 @@ export const usersSlice = createSlice({
       })
       .addCase(getPostsById.fulfilled, (state, action) => {
         state.posts = action.payload.posts;
+      })
+      .addCase(uploadImages.fulfilled, (state, action) => {
+        const { banner, picture } = action.payload;
+        banner && (state.profile.banner = banner);
+        picture && (state.profile.picture = picture);
+        state.isSuccess = true;
+      })
+      .addCase(uploadImages.pending, (state) => {
+        state.isLoading = true;
       });
   },
 });

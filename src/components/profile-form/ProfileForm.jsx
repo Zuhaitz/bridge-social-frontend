@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { reset, uploadImages } from "../../redux/users/usersSlice";
 
 import cameraIcon from "../../assets/icons/camera.svg";
 
@@ -7,19 +9,36 @@ import "./ProfileForm.scss";
 const ProfileForm = ({ setEditing, profile }) => {
   const [banner, setBanner] = useState(profile.banner);
   const [picture, setPicture] = useState(profile.picture);
+  const [files, setFiles] = useState({});
+
+  const dispatch = useDispatch();
+  const { isSuccess, isLoading } = useSelector((state) => state.users);
+
+  useEffect(() => {
+    if (!isSuccess) return;
+    setEditing(false);
+    dispatch(reset());
+  }, [isSuccess]);
 
   const updateBanner = async (event) => {
     if (event.target.files.length === 0) return;
-    setBanner(URL.createObjectURL(event.target.files[0]));
+    const file = event.target.files[0];
+    setBanner(URL.createObjectURL(file));
+    setFiles({ ...files, banner: file });
   };
 
   const updatePicture = async (event) => {
     if (event.target.files.length === 0) return;
-    setPicture(URL.createObjectURL(event.target.files[0]));
+    const file = event.target.files[0];
+    setPicture(URL.createObjectURL(file));
+    setFiles({ ...files, picture: file });
   };
 
   const onSaveChanges = (event) => {
     event.preventDefault();
+    if (Object.keys(files).length === 0) return;
+
+    dispatch(uploadImages(files));
   };
 
   const onCancel = (event) => {
@@ -67,9 +86,14 @@ const ProfileForm = ({ setEditing, profile }) => {
         />
 
         <div className="profile-form__buttons">
-          <button onClick={onSaveChanges} className="profile-form__button">
-            Save changes
+          <button
+            onClick={onSaveChanges}
+            className="profile-form__button"
+            disabled={isLoading}
+          >
+            {isLoading ? "Uploading..." : "Save changes"}
           </button>
+
           <button
             onClick={onCancel}
             className="profile-form__button profile-form__button--cancel"
