@@ -8,7 +8,7 @@ import { createPost, reset } from "../../redux/posts/postsSlice";
 
 const PostForm = ({ setPosting }) => {
   // const { user } = useSelector((state) => state.auth);
-  const user = localStorage.getItem("user");
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const limit = 300;
   const [remaining, setRemaining] = useState(limit);

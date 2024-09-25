@@ -94,7 +94,11 @@ export const postsSlice = createSlice({
       })
       .addCase(createPost.fulfilled, (state, action) => {
         state.isSuccess = true;
-        state.posts.unshift(action.payload.post);
+
+        const user = JSON.parse(localStorage.getItem("user"));
+        const post = action.payload.post;
+        post.createdBy = user;
+        state.posts.unshift(post);
       })
       .addCase(likePost.fulfilled, (state, action) => {
         state.postLiked = action.payload._id;
