@@ -52,6 +52,8 @@
     overflow: hidden;
     background-color: $background-color-focus;
 
+    cursor: pointer;
+
     img {
       width: 100%;
     }
@@ -79,9 +81,15 @@
 
     background-color: $ternary-text-color;
 
+    cursor: pointer;
+
     img {
       height: 100%;
     }
+  }
+
+  &__file-input {
+    display: none;
   }
 
   &__buttons {
