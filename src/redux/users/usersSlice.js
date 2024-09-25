@@ -65,6 +65,12 @@ export const usersSlice = createSlice({
         const { banner, picture } = action.payload;
         banner && (state.profile.banner = banner);
         picture && (state.profile.picture = picture);
+
+        const user = JSON.parse(localStorage.getItem("user"));
+        user.banner = banner;
+        user.picture = picture;
+        localStorage.setItem("user", JSON.stringify(user));
+
         state.isSuccess = true;
       })
       .addCase(uploadImages.pending, (state) => {
