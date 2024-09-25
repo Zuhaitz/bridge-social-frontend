@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { reset, uploadImages } from "../../redux/users/usersSlice";
 
+import userIcon from "../../assets/icons/circle-user.svg";
 import cameraIcon from "../../assets/icons/camera.svg";
 
 import "./ProfileForm.scss";
