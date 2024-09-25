@@ -41,7 +41,8 @@ const CommentForm = ({ postId }) => {
 
   const sendComment = (event) => {
     event.preventDefault();
-    if (comment.replace(/\s/g, "").length <= 0 || comment.length > 300) return;
+    if (comment.replace(/\s/g, "").length <= 0 || comment.length > limit)
+      return;
 
     dispatch(postComment({ post: postId, content: comment.trim() }));
   };

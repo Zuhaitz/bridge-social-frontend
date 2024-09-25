@@ -46,6 +46,8 @@ const PostForm = ({ setPosting }) => {
   const handlePublish = (event) => {
     event.preventDefault();
 
+    if (post.replace(/\s/g, "").length <= 0 || post.length > limit) return;
+
     dispatch(createPost({ content: post, createdBy: user }));
   };
 
