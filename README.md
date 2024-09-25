@@ -1,9 +1,17 @@
-# E-Commerce App FrontEnd
+# Social Network App FrontEnd
 
 The frontend implementation of a social network app, making use of Vite, React, SaSS and Axios to upload data to our backend.
 The design is a clone of the Bluesky social network.
 
 You can find the backend of the app [here](https://github.com/Zuhaitz/bridge-social-backend).
+
+## Tech Stack
+
+**Server:** Node, NPM, MongoDB
+
+## Acknowledgements
+
+- [Cloudinary](https://cloudinary.com)
 
 ## Run Locally
 
