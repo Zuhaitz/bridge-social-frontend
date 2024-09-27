@@ -17,6 +17,25 @@ const postComment = async (postId, commentData) => {
   return res.data;
 };
 
+const uploadImage = async (commentId, images) => {
+  const token = JSON.parse(localStorage.getItem("token"));
+
+  const formData = new FormData();
+  formData.append("picture", images.picture);
+
+  const res = await axios.put(
+    `${API_URL}/comments/uploadImage/${commentId}`,
+    formData,
+    {
+      headers: {
+        authorization: token,
+      },
+    }
+  );
+
+  return res.data;
+};
+
 const likeComment = async (commentId, isLiked = true) => {
   const token = JSON.parse(localStorage.getItem("token"));
 
@@ -45,6 +64,7 @@ const likeComment = async (commentId, isLiked = true) => {
 
 const commentsService = {
   postComment,
+  uploadImage,
   likeComment,
 };
 

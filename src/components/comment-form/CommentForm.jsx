@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { postComment, reset } from "../../redux/comments/commentsSlice";
+import {
+  postComment,
+  uploadImageToComment,
+  reset,
+} from "../../redux/comments/commentsSlice";
 
 import userIcon from "../../assets/icons/circle-user.svg";
 import pictureIcon from "../../assets/icons/picture.svg";
@@ -17,15 +21,27 @@ const CommentForm = ({ postId }) => {
   const [picture, setPicture] = useState(null);
   const [file, setFile] = useState({});
 
-  const { isSuccess } = useSelector((state) => state.comments);
+  const {
+    comment: com,
+    isSuccess,
+    isLoading,
+    commentUploaded,
+  } = useSelector((state) => state.comments);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (!commentUploaded) return;
+    dispatch(uploadImageToComment({ id: com._id, picture: file }));
+  }, [commentUploaded]);
+
+  useEffect(() => {
     if (!isSuccess) return;
     dispatch(reset());
     setComment("");
+    setPicture(null);
+    setFile({});
     setRemaining(limit);
   }, [isSuccess]);
 

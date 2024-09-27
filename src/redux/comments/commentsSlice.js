@@ -4,6 +4,8 @@ import commentsService from "./commentsService";
 const initialState = {
   comment: null,
   isSuccess: false,
+  isLoading: false,
+  commentUploaded: false,
   commentLiked: "",
 };
 
@@ -14,6 +16,20 @@ export const postComment = createAsyncThunk(
       const { post, content } = commentData;
 
       return await commentsService.postComment(post, { content });
+    } catch (error) {
+      console.error("Create comment error: ", error);
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const uploadImageToComment = createAsyncThunk(
+  "comments/uploadImage",
+  async (commentData, thunkAPI) => {
+    try {
+      const { id, picture } = commentData;
+
+      return await commentsService.uploadImage(id, { picture });
     } catch (error) {
       console.error("Create comment error: ", error);
       return thunkAPI.rejectWithValue(error.response.data);
@@ -40,13 +56,22 @@ export const commentsSlice = createSlice({
   reducers: {
     reset: (state) => {
       state.isSuccess = false;
+      state.isLoading = false;
+      state.commentUploaded = false;
       state.commentLiked = "";
     },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(postComment.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(postComment.fulfilled, (state, action) => {
         state.comment = action.payload.comment;
+        state.commentUploaded = true;
+      })
+      .addCase(uploadImageToComment.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.isSuccess = true;
       })
       .addCase(likeComment.fulfilled, (state, action) => {
