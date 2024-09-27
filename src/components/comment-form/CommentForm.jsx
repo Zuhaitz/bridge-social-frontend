@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { postComment, reset } from "../../redux/comments/commentsSlice";
 
 import userIcon from "../../assets/icons/circle-user.svg";
+import pictureIcon from "../../assets/icons/picture.svg";
 
 import "./CommentForm.scss";
 
@@ -13,6 +14,9 @@ const CommentForm = ({ postId }) => {
   const limit = 300;
   const [comment, setComment] = useState("");
   const [remaining, setRemaining] = useState(limit);
+  const [picture, setPicture] = useState(null);
+  const [file, setFile] = useState({});
+
   const { isSuccess } = useSelector((state) => state.comments);
 
   const navigate = useNavigate();
@@ -39,6 +43,13 @@ const CommentForm = ({ postId }) => {
     navigate(`/profile/${user._id}`);
   };
 
+  const addImage = async (event) => {
+    if (event.target.files.length === 0) return;
+    const file = event.target.files[0];
+    setPicture(URL.createObjectURL(file));
+    setFile({ picture: file });
+  };
+
   const sendComment = (event) => {
     event.preventDefault();
     if (comment.replace(/\s/g, "").length <= 0 || comment.length > limit)
@@ -46,6 +57,8 @@ const CommentForm = ({ postId }) => {
 
     dispatch(postComment({ post: postId, content: comment.trim() }));
   };
+
+  const uploadImage = () => {};
 
   return (
     <div className="comment-form">
@@ -64,11 +77,32 @@ const CommentForm = ({ postId }) => {
           className="comment-form__textarea"
         />
 
+        {picture && (
+          <div className="comment-form__image">
+            <img src={picture} alt="comment form image" />
+          </div>
+        )}
+
         <div className="comment-form__options">
-          <div>Buttons</div>
+          <div className="comment-form__buttons">
+            <label htmlFor="picture">
+              <div className="comment-form__button">
+                <img src={pictureIcon} alt="change banner icon" />
+              </div>
+            </label>
+
+            <input
+              id="picture"
+              type="file"
+              accept="image/png, image/jpeg"
+              onInput={addImage}
+              className="comment-form__file-input"
+            />
+          </div>
 
           <div className="comment-form__info">
             <p className={`${remaining < 0 && "error"}`}>{remaining}</p>
+
             <button onClick={sendComment} className="comment-form__respond">
               Respond
             </button>

@@ -60,4 +60,19 @@
       background-color: $background-color-focus;
     }
   }
+
+  &__post-picture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 20px;
+    margin-top: 0;
+    overflow: hidden;
+    border-radius: 20px;
+
+    img {
+      width: 100%;
+    }
+  }
 }
