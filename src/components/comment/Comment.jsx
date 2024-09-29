@@ -50,8 +50,13 @@ const Comment = ({ _id, content, picture, createdBy, likes }) => {
   return (
     <div>
       <div className="comment">
-        <div onClick={goToProfile} className="comment__picture">
-          <img src={createdBy.picture || userIcon} alt="user profile picture" />
+        <div>
+          <div onClick={goToProfile} className="comment__picture">
+            <img
+              src={createdBy.picture || userIcon}
+              alt="user profile picture"
+            />
+          </div>
         </div>
 
         <div className="comment__container">

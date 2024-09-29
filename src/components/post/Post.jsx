@@ -51,9 +51,15 @@ const Post = ({ _id, content, createdBy, likes, comments, createdAt }) => {
   return (
     <a href={`/post/${_id}`}>
       <div className="post">
-        <div onClick={goToProfile} className="post__picture">
-          <img src={createdBy.picture || userIcon} alt="user profile picture" />
+        <div>
+          <div onClick={goToProfile} className="post__picture">
+            <img
+              src={createdBy.picture || userIcon}
+              alt="user profile picture"
+            />
+          </div>
         </div>
+
         <div className="post__body">
           <p className="post__user">{createdBy.username}</p>
           <p className="post__content">{content}</p>

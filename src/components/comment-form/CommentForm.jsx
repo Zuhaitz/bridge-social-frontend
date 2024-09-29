@@ -78,8 +78,10 @@ const CommentForm = ({ postId }) => {
 
   return (
     <div className="comment-form">
-      <div onClick={goToProfile} className="post-detail__picture">
-        <img src={user.picture || userIcon} alt="user profile picture" />
+      <div>
+        <div onClick={goToProfile} className="comment-form__picture">
+          <img src={user.picture || userIcon} alt="user profile picture" />
+        </div>
       </div>
 
       <div className="comment-form__container">

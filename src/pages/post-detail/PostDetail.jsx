@@ -97,11 +97,13 @@ const PostDetail = () => {
 
           <div className="post-detail__post">
             <div className="post-detail__info">
-              <div onClick={goToProfile} className="post-detail__picture">
-                <img
-                  src={post.createdBy.picture || userIcon}
-                  alt="user profile picture"
-                />
+              <div>
+                <div onClick={goToProfile} className="post-detail__picture">
+                  <img
+                    src={post.createdBy.picture || userIcon}
+                    alt="user profile picture"
+                  />
+                </div>
               </div>
 
               <div>
