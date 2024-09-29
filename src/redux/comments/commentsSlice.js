@@ -29,7 +29,7 @@ export const uploadImageToComment = createAsyncThunk(
     try {
       const { id, picture } = commentData;
 
-      return await commentsService.uploadImage(id, { picture });
+      return await commentsService.uploadImage(id, picture);
     } catch (error) {
       console.error("Create comment error: ", error);
       return thunkAPI.rejectWithValue(error.response.data);
