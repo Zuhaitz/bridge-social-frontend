@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000";
+const env = import.meta.env;
+const API_URL = env.VITE_API_URL || "http://localhost:3000";
 
 const getAll = async () => {
   const res = await axios.get(`${API_URL}/posts`);

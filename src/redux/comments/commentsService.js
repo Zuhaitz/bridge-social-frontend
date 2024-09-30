@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000";
+const env = import.meta.env;
+const API_URL = env.VITE_API_URL || "http://localhost:3000";
 
 const postComment = async (postId, commentData) => {
   const token = JSON.parse(localStorage.getItem("token"));
