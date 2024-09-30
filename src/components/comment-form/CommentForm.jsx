@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  postComment,
-  uploadImageToComment,
-  reset,
-} from "../../redux/comments/commentsSlice";
+import { postComment, reset } from "../../redux/comments/commentsSlice";
 
 import userIcon from "../../assets/icons/circle-user.svg";
 import pictureIcon from "../../assets/icons/picture.svg";
@@ -21,20 +17,10 @@ const CommentForm = ({ postId }) => {
   const [picture, setPicture] = useState(null);
   const [file, setFile] = useState({});
 
-  const {
-    comment: com,
-    isSuccess,
-    isLoading,
-    commentUploaded,
-  } = useSelector((state) => state.comments);
+  const { isSuccess, isLoading } = useSelector((state) => state.comments);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (!commentUploaded) return;
-    dispatch(uploadImageToComment({ id: com._id, picture: file }));
-  }, [commentUploaded]);
 
   useEffect(() => {
     if (!isSuccess) return;
@@ -71,62 +57,71 @@ const CommentForm = ({ postId }) => {
     if (comment.replace(/\s/g, "").length <= 0 || comment.length > limit)
       return;
 
-    dispatch(postComment({ post: postId, content: comment.trim() }));
+    dispatch(
+      postComment({
+        post: postId,
+        content: comment.trim(),
+        picture: file.picture,
+      })
+    );
   };
-
-  const uploadImage = () => {};
 
   return (
     <div className="comment-form">
-      <div>
-        <div onClick={goToProfile} className="comment-form__picture">
-          <img src={user.picture || userIcon} alt="user profile picture" />
-        </div>
-      </div>
-
-      <div className="comment-form__container">
-        <textarea
-          autoFocus
-          name="post"
-          id="post"
-          placeholder="Write your response"
-          value={comment}
-          onInput={handleTextInput}
-          className="comment-form__textarea"
-        />
-
-        {picture && (
-          <div className="comment-form__image">
-            <img src={picture} alt="comment form image" />
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <div>
+            <div onClick={goToProfile} className="comment-form__picture">
+              <img src={user.picture || userIcon} alt="user profile picture" />
+            </div>
           </div>
-        )}
-
-        <div className="comment-form__options">
-          <div className="comment-form__buttons">
-            <label htmlFor="picture">
-              <div className="comment-form__button">
-                <img src={pictureIcon} alt="change banner icon" />
-              </div>
-            </label>
-
-            <input
-              id="picture"
-              type="file"
-              accept="image/png, image/jpeg"
-              onInput={addImage}
-              className="comment-form__file-input"
+          <div className="comment-form__container">
+            <textarea
+              autoFocus
+              name="post"
+              id="post"
+              placeholder="Write your response"
+              value={comment}
+              onInput={handleTextInput}
+              className="comment-form__textarea"
             />
-          </div>
 
-          <div className="comment-form__info">
-            <p className={`${remaining < 0 && "error"}`}>{remaining}</p>
+            {picture && (
+              <div className="comment-form__image">
+                <img src={picture} alt="comment form image" />
+              </div>
+            )}
 
-            <button onClick={sendComment} className="comment-form__respond">
-              Respond
-            </button>
+            <div className="comment-form__options">
+              <div className="comment-form__buttons">
+                <label htmlFor="picture">
+                  <div className="comment-form__button">
+                    <img src={pictureIcon} alt="change banner icon" />
+                  </div>
+                </label>
+
+                <input
+                  id="picture"
+                  type="file"
+                  accept="image/png, image/jpeg"
+                  onInput={addImage}
+                  className="comment-form__file-input"
+                />
+              </div>
+
+              <div className="comment-form__info">
+                <p className={`${remaining < 0 && "error"}`}>{remaining}</p>
+
+                <button onClick={sendComment} className="comment-form__respond">
+                  Respond
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };

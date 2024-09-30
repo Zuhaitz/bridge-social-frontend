@@ -4,34 +4,18 @@ const API_URL = "http://localhost:3000";
 
 const postComment = async (postId, commentData) => {
   const token = JSON.parse(localStorage.getItem("token"));
-  const res = await axios.post(
-    `${API_URL}/comments/id/` + postId,
-    commentData,
-    {
-      headers: {
-        authorization: token,
-      },
-    }
-  );
-
-  return res.data;
-};
-
-const uploadImage = async (commentId, images) => {
-  const token = JSON.parse(localStorage.getItem("token"));
 
   const formData = new FormData();
-  formData.append("picture", images.picture);
+  formData.append("content", commentData.content);
+  formData.append("picture", commentData.picture);
 
-  const res = await axios.put(
-    `${API_URL}/comments/uploadImage/${commentId}`,
-    formData,
-    {
-      headers: {
-        authorization: token,
-      },
-    }
-  );
+  console.log(commentData.content, commentData.picture);
+
+  const res = await axios.post(`${API_URL}/comments/id/` + postId, formData, {
+    headers: {
+      authorization: token,
+    },
+  });
 
   return res.data;
 };
@@ -64,7 +48,6 @@ const likeComment = async (commentId, isLiked = true) => {
 
 const commentsService = {
   postComment,
-  uploadImage,
   likeComment,
 };
 

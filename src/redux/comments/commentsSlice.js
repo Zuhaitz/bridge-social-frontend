@@ -13,23 +13,9 @@ export const postComment = createAsyncThunk(
   "comments/postComment",
   async (commentData, thunkAPI) => {
     try {
-      const { post, content } = commentData;
+      const { post, content, picture } = commentData;
 
-      return await commentsService.postComment(post, { content });
-    } catch (error) {
-      console.error("Create comment error: ", error);
-      return thunkAPI.rejectWithValue(error.response.data);
-    }
-  }
-);
-
-export const uploadImageToComment = createAsyncThunk(
-  "comments/uploadImage",
-  async (commentData, thunkAPI) => {
-    try {
-      const { id, picture } = commentData;
-
-      return await commentsService.uploadImage(id, picture);
+      return await commentsService.postComment(post, { content, picture });
     } catch (error) {
       console.error("Create comment error: ", error);
       return thunkAPI.rejectWithValue(error.response.data);
@@ -68,10 +54,6 @@ export const commentsSlice = createSlice({
       })
       .addCase(postComment.fulfilled, (state, action) => {
         state.comment = action.payload.comment;
-        state.commentUploaded = true;
-      })
-      .addCase(uploadImageToComment.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.isSuccess = true;
       })
       .addCase(likeComment.fulfilled, (state, action) => {
